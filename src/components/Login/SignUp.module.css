@@ -1,0 +1,30 @@
+.full {
+    display: flex;
+    flex-direction: row;
+    margin-left: 0;
+}
+
+.leftHalf {
+    background: linear-gradient(rgb(20, 20, 112), rgb(106, 106, 218));
+    /* width: 50vw;
+    height: 50vh; */
+    border: 1px solid black;
+}
+
+.form {
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.form h2 {
+    text-align: center;
+}
+
+.customInput {
+    width: 25rem;
+    height: 5rem;
+}
+
+.customButton {
+    align-items: center;
+}
