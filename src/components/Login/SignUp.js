@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -36,7 +37,7 @@ function SignupForm() {
     const confirmEnteredPassword = signUpForm.confirmPassword;
 
     if (enteredPassword !== confirmEnteredPassword) {
-      setAlertPassword(<Alert variant="danger">Passwords do not match</Alert>);
+      setAlertPassword(<Alert variant="danger">Password and confirm password do not match</Alert>);
     }
 
     let url =
@@ -75,17 +76,17 @@ function SignupForm() {
   };
 
   return (
-    <Container>
+    <Container fluid className="p-0">
       <Row className={styles.full}>
         <Col xs={12} md={6} className={styles.leftHalf}>
           <div>
-            <h2>Mailbox</h2>
+            <h2>MailBox</h2>
             <h2>Client</h2>
             <h2>Project</h2>
           </div>
         </Col>
-        <Col xs={12} md={6}>
-          <div className={styles.form}>
+        <Col xs={12} md={6} className={styles.rightHalf}>
+          <div>
             <h2>Sign Up</h2>
             {alertPassword}
 
@@ -128,15 +129,19 @@ function SignupForm() {
                   />
                 </FloatingLabel>
               </Form.Group>
-
+            <div className={styles.toggle}>
               <Button
                 type="submit"
                 variant="primary"
-                block="true"
+                // block="true"
                 className={styles.customButton}
               >
                 Sign Up
               </Button>
+              <p className="text-center mt-3">
+              Already have an account? <Link to="/login" className={styles.loginLink}>Login</Link>
+            </p>
+            </div>
             </Form>
           </div>
         </Col>

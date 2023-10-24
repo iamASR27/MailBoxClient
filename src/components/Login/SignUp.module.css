@@ -1,22 +1,40 @@
 .full {
     display: flex;
     flex-direction: row;
-    margin-left: 0;
+    height: 100vh;
+    width: 100vw;
 }
 
 .leftHalf {
-    background: linear-gradient(rgb(20, 20, 112), rgb(106, 106, 218));
-    /* width: 50vw;
-    height: 50vh; */
-    border: 1px solid black;
+    background: linear-gradient(
+        135deg, 
+        #0073e6 0%, /* Dark blue at the start */
+        #00c6ff 30%, /* Light blue for the shine */
+        #0073e6 100% /* Dark blue at the end */
+    );
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    /* flex-direction: column; */
+    align-items: center;
+    color: white;
 }
 
-.form {
-    border: 1px solid black;
-    padding: 1rem;
+.leftHalf div h2 {
+    /* border: 1px solid black; */
+    font-size: 90px;
 }
 
-.form h2 {
+.rightHalf {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-right: -1rem; */
+}
+
+.rightHalf h2 {
     text-align: center;
 }
 
@@ -25,6 +43,65 @@
     height: 5rem;
 }
 
-.customButton {
+.toggle {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
+.customButton {
+    width: 30%;
+}
+
+.loginLink {
+    text-decoration: none;
+    color: blue;
+    font-weight: 500;
+    font-size: 20;
+}
+
+@media (max-width: 768px) {
+    .full {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leftHalf {
+        height: 15vh;
+        text-align: center;
+        width: 100vw;
+        /* border: 2px solid black; */
+    }
+
+    .leftHalf div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .leftHalf div h2 {
+        font-size: 28px;
+        margin-right: 10px;
+    }
+
+    .rightHalf {
+        margin: 7rem auto;
+        /* border: 2px solid black; */
+    }
+
+    .customInput {
+        max-width: 90vw; 
+    }
+}
+
+@media (max-width: 300px) { 
+    .leftHalf div h2 {
+        font-size: 22px;
+        margin-right: 10px;
+    }
+
+}
+
+
+
+
+
