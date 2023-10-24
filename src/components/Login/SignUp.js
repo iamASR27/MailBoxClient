@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -19,6 +19,8 @@ function SignupForm() {
   });
 
   const [alertPassword, setAlertPassword] = useState(null);
+
+  const navigate = useNavigate();
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -62,6 +64,7 @@ function SignupForm() {
         console.log("User has successfully signed up.");
         // localStorage.setItem("token", data.idToken);
         // localStorage.setItem("userId", data.localId);
+        navigate("/home");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";
@@ -87,7 +90,7 @@ function SignupForm() {
         </Col>
         <Col xs={12} md={6} className={styles.rightHalf}>
           <div>
-            <h2>Sign Up</h2>
+            <h2 data-testid="signup-header">Sign Up</h2>
             {alertPassword}
 
             <Form onSubmit={handleSubmit}>
@@ -95,6 +98,7 @@ function SignupForm() {
                 <FloatingLabel controlId="email" label="Email">
                   <Form.Control
                     type="email"
+                    id="email"
                     name="email"
                     onChange={inputChangeHandler}
                     required
@@ -106,6 +110,7 @@ function SignupForm() {
                 <FloatingLabel controlId="password" label="Password">
                   <Form.Control
                     type="password"
+                    id="password"
                     name="password"
                     onChange={inputChangeHandler}
                     required
@@ -123,6 +128,7 @@ function SignupForm() {
                 >
                   <Form.Control
                     type="password"
+                    id="confirmPassword"
                     name="confirmPassword"
                     onChange={inputChangeHandler}
                     required
@@ -135,6 +141,7 @@ function SignupForm() {
                 variant="primary"
                 // block="true"
                 className={styles.customButton}
+                data-testid="signup-button"
               >
                 Sign Up
               </Button>

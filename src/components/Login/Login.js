@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
   Button,
@@ -9,6 +9,8 @@ import {
   FloatingLabel,
   Container,
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
 import styles from "./SignUp.module.css";
 
 function LoginForm() {
@@ -18,6 +20,10 @@ function LoginForm() {
   });
 
   const [alertPassword, setAlertPassword] = useState(null);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -54,8 +60,10 @@ function LoginForm() {
         const data = await response.json();
         console.log(data);
         console.log("User has successfully logged in.");
-        // localStorage.setItem("token", data.idToken);
-        // localStorage.setItem("userId", data.localId);
+        dispatch(authActions.login({ token: data.idToken, userId: data.localId }));
+        localStorage.setItem("token", data.idToken);
+        localStorage.setItem("userId", data.localId);
+        navigate("/home");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";
@@ -65,8 +73,8 @@ function LoginForm() {
         throw new Error(errorMessage);
       }
     } catch (err) {
-    //   alert(err.message);
-    setAlertPassword(<Alert variant="danger">{err.message}</Alert>);
+      //   alert(err.message);
+      setAlertPassword(<Alert variant="danger">{err.message}</Alert>);
     }
   };
 
@@ -107,6 +115,10 @@ function LoginForm() {
                   />
                 </FloatingLabel>
               </Form.Group>
+
+              <Link to="/login/forgotPassword" className={styles.loginLink}>
+                Forgot Password?
+              </Link>
 
               <div className={styles.toggle}>
                 <Button
