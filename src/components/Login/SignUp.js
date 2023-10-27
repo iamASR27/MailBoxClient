@@ -64,7 +64,7 @@ function SignupForm() {
         console.log("User has successfully signed up.");
         // localStorage.setItem("token", data.idToken);
         // localStorage.setItem("userId", data.localId);
-        navigate("/home");
+        navigate("/login");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";

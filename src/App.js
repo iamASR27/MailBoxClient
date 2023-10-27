@@ -1,22 +1,26 @@
 import React from "react";
 import SignupForm from "./components/Login/SignUp";
 import LoginForm from "./components/Login/Login";
+import Notification from "./components/UI/Notification";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./components/Pages/Home";
+import Home from "./components/Mail/Home";
 import { useSelector } from "react-redux";
 
 function App() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  // const navigate = useNavigate();
-
-  // if (!isLoggedIn) {
-  //   navigate('/login');
-  // }
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const notification = useSelector((state) => state.ui.notification);
 
   return (
     <>
+    {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />

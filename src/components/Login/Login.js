@@ -63,6 +63,7 @@ function LoginForm() {
         dispatch(authActions.login({ token: data.idToken, userId: data.localId }));
         localStorage.setItem("token", data.idToken);
         localStorage.setItem("userId", data.localId);
+        localStorage.setItem("userEmail", enteredEmail);
         navigate("/home");
       } else {
         const data = await response.json();
