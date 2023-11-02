@@ -1,0 +1,24 @@
+.header {
+    width: 100%;
+    height: 4rem;
+    padding: 0 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(
+        135deg, 
+        #0073e6 0%, /* Dark blue at the start */
+        #00c6ff 30%, /* Light blue for the shine */
+        #0073e6 100% /* Dark blue at the end */
+    );
+}
+
+.header h1 {
+    color: white;
+    font-size: 30px;
+    font-family: Pacifico, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* .logoutButton {
+    background: rgba(109, 18, 18, 0.67);
+} */

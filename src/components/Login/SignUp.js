@@ -31,6 +31,14 @@ function SignupForm() {
     });
   };
 
+  const showAlert = (message, variant) => {
+    setAlertPassword(<Alert variant={variant}>{message}</Alert>);
+    
+    setTimeout(() => {
+      setAlertPassword(null);
+    }, 3000);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -62,9 +70,10 @@ function SignupForm() {
         const data = await response.json();
         console.log(data);
         console.log("User has successfully signed up.");
-        // localStorage.setItem("token", data.idToken);
-        // localStorage.setItem("userId", data.localId);
-        navigate("/login");
+        localStorage.setItem("token", data.idToken);
+        localStorage.setItem("userId", data.localId);
+        localStorage.setItem("userEmail", enteredEmail);
+        navigate("/home");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";
@@ -74,7 +83,8 @@ function SignupForm() {
         throw new Error(errorMessage);
       }
     } catch (err) {
-      alert(err.message);
+      // alert(err.message);
+      showAlert(err.message, "danger");
     }
   };
 
@@ -98,7 +108,6 @@ function SignupForm() {
                 <FloatingLabel controlId="email" label="Email">
                   <Form.Control
                     type="email"
-                    id="email"
                     name="email"
                     onChange={inputChangeHandler}
                     required
@@ -110,7 +119,6 @@ function SignupForm() {
                 <FloatingLabel controlId="password" label="Password">
                   <Form.Control
                     type="password"
-                    id="password"
                     name="password"
                     onChange={inputChangeHandler}
                     required
@@ -128,7 +136,6 @@ function SignupForm() {
                 >
                   <Form.Control
                     type="password"
-                    id="confirmPassword"
                     name="confirmPassword"
                     onChange={inputChangeHandler}
                     required

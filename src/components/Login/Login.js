@@ -25,6 +25,14 @@ function LoginForm() {
 
   const dispatch = useDispatch();
 
+  const showAlert = (message, variant) => {
+    setAlertPassword(<Alert variant={variant}>{message}</Alert>);
+    
+    setTimeout(() => {
+      setAlertPassword(null);
+    }, 3000);
+  };
+
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
     // console.log(name, value)
@@ -75,7 +83,8 @@ function LoginForm() {
       }
     } catch (err) {
       //   alert(err.message);
-      setAlertPassword(<Alert variant="danger">{err.message}</Alert>);
+      // setAlertPassword(<Alert variant="danger">{err.message}</Alert>);
+      showAlert(err.message, "danger");
     }
   };
 

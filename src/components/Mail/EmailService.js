@@ -17,9 +17,9 @@ export const sendEmailToInbox = async (recipientId, emailData) => {
       throw new Error("Failed to send email to receiver inbox!");
     }
 
-      const data = response.json();
+    const data = response.json();
 
-      return data;
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -43,10 +43,36 @@ export const sendEmailToSentbox = async (senderId, emailData) => {
       throw new Error("Failed to send email to user's sentbox");
     }
 
-      const data = response.json();
+    const data = response.json();
 
-      return data;
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
+
+export const fetchInboxMails = async () => {
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    const userId = userEmail.replace(/[@.]/g, "");
+  // console.log(userId)
+
+  try {
+    const response = await fetch(
+      `https://mailbox-client-167c3-default-rtdb.firebaseio.com/users/${userId}/inbox.json`
+    );
+
+    if (!response) {
+      throw new Error("Failed to send email to user's sentbox");
+    }
+
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+};
+
+const fetchSentboxMails = () => {};

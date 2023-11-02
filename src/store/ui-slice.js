@@ -11,6 +11,10 @@ const uiSlice = createSlice({
             title: action.payload.title,
             message: action.payload.message,
         }
+    },
+
+    clearNotification(state) {
+      state.notification = null;
     }
   }
 });

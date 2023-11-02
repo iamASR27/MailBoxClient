@@ -1,2 +1,29 @@
+.fix-container {
+    margin: 1rem auto;
+    overflow: hidden;
+}
 
+.navigation-column {
+    /* flex: 0 0 30%;
+    max-width: 30%; */
+    position: relative;
+    height: 100vh;
+  }
+
+  .navigation-column::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    background-color: #ccc;
+  }
+
+  
+  .main-column {
+    flex: 1; 
+    overflow-y: auto;
+  }
+  
 
