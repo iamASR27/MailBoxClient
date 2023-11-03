@@ -3,7 +3,7 @@ import SignupForm from "./components/Login/SignUp";
 import LoginForm from "./components/Login/Login";
 import Notification from "./components/UI/Notification";
 import ForgotPassword from "./components/Login/ForgotPassword";
-// import EmailDetails from "./components/Home/EmailDetails";
+import EmailDetails from "./components/Home/EmailDetails";
 import Home from "./components/Home/Home";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
@@ -12,9 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "./store/ui-slice";
 import Header from "./components/Header/Header";
 import NavigationSideBar from "./components/Home/Navigation";
-import { Container, Row, Col } from "react-bootstrap";
+// import { Container, Row, Col } from "react-bootstrap";
 import { fetchInboxMails } from "./components/Mail/EmailService";
-import EmailDetails from "./components/Home/EmailDetails";
 
 function App() {
   const navigate = useNavigate();
@@ -57,11 +56,11 @@ function App() {
 
   useEffect(() => {
     fetchInbox();
-    // console.log(emailContent)
   }, [fetchInbox]);
 
   return (
     <>
+    <div className="app-container">
       {notification && (
         <Notification
           status={notification.status}
@@ -69,77 +68,36 @@ function App() {
           message={notification.message}
         />
       )}
-
+      
+      {isLoggedIn && <Header />}
       {isLoggedIn && (
-        <div>
-          <Header />
-          <Container fluid className="fix-container">
-            <Row>
-              <Col sm={3} className="navigation-column">
-                <NavigationSideBar onOptionClick={handleSidebarOptionClick} />
-              </Col>
-              <Col sm={9} className="main-column">
-                <Routes>
-                  {selectedEmail === null && isLoggedIn && (
-                    <Route
-                      path="/home"
-                      element={
-                        <Home
-                          emailContent={emailContent}
-                          setSelectedEmail={setSelectedEmail}
-                          fetchInbox={fetchInbox}
-                        />
-                      }
-                    />
-                  )}
-                  {selectedEmail && isLoggedIn && (
-                    <Route
-                      path="/home/:emailKey"
-                      element={
-                        <EmailDetails
-                          onClick={handleGoback}
-                          selectedEmail={selectedEmail}
-                        />
-                      }
-                    />
-                  )}
-                  <Route path="/" element={<Navigate to="/login" />} />
-                  <Route path="/login" element={<LoginForm />} />
-                  <Route
-                    path="/login/forgotPassword"
-                    element={<ForgotPassword />}
-                  />
-                  <Route path="/signUp" element={<SignupForm />} />
-                  {isLoggedIn && (
-                    <Route path="/composeEmail" element={<ComposeEmail />} />
-                  )}
-                </Routes>
-              </Col>
-            </Row>
-          </Container>
+        <div className="navigation-column">
+          <NavigationSideBar onOptionClick={handleSidebarOptionClick} />
         </div>
       )}
-      {/* <Routes>
+      <div className="content">
+      <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/login/forgotPassword" element={<ForgotPassword />} />
         <Route path="/signUp" element={<SignupForm />} />
         {isLoggedIn && (
           <Route path="/composeEmail" element={<ComposeEmail />} />
-        )} */}
-      {/* {selectedEmail === null && isLoggedIn && (
+        )}
+
+        {isLoggedIn && selectedEmail === null && (
           <Route
             path="/home"
             element={
               <Home
                 emailContent={emailContent}
                 setSelectedEmail={setSelectedEmail}
-                fetchInbox={fetchInbox}
               />
             }
           />
         )}
-        {selectedEmail && isLoggedIn && (
+
+        {isLoggedIn && selectedEmail && (
           <Route
             path="/home/:emailKey"
             element={
@@ -149,8 +107,10 @@ function App() {
               />
             }
           />
-        )} */}
-      {/* </Routes> */}
+        )}
+      </Routes>
+      </div>
+      </div>
     </>
   );
 }

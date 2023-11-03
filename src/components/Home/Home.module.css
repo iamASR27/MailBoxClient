@@ -1,28 +1,6 @@
 .container {
-    margin: 1rem auto;
-    overflow: hidden;
+    width: 50vw;
 }
-
-.left-panel {
-    position: relative;
-    height: 100vh;
-}
-
-.left-panel::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    background-color: #ccc;
-  }
-
-  .right-panel {
-    /* border: 1px solid black; */
-    flex: 1; 
-    overflow-y: auto;
-  }
 
   .email-subject {
     display: flex;

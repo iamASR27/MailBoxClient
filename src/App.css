@@ -1,16 +1,25 @@
-.fix-container {
-    margin: 1rem auto;
-    overflow: hidden;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .navigation-column {
-    /* flex: 0 0 30%;
-    max-width: 30%; */
-    position: relative;
-    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border: 1px solid black;
+    width: 20vw;
+    height: 90vh;
+    padding: 1rem;
   }
 
-  .navigation-column::after {
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  /* .navigation-column::after {
     content: "";
     position: absolute;
     top: 0;
@@ -18,12 +27,12 @@
     right: 0;
     width: 1px;
     background-color: #ccc;
-  }
+  } */
 
   
-  .main-column {
+  /* .main-column {
     flex: 1; 
     overflow-y: auto;
-  }
+  } */
   
 

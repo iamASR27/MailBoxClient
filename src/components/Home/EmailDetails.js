@@ -1,15 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 
 const EmailDetails = ({ selectedEmail, onClick }) => {
-  // const { emailKey } = useParams();
+  console.log("selectedEmail", selectedEmail);
 
   return (
     <div>
-      {/* <Button as={Link} to="/home" variant="outline-primary">
-        Go Back
-      </Button> */}
       <Button onClick={onClick} variant="outline-primary">
         Go Back
       </Button>
