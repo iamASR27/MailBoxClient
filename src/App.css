@@ -1,33 +1,16 @@
 .app-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
+  background-color: #eee9e931;
 }
-
-.navigation-column {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    border: 1px solid black;
-    width: 20vw;
-    height: 90vh;
-    padding: 1rem;
-  }
 
   .content {
     flex: 1;
     padding: 20px;
   }
 
-  /* .navigation-column::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    background-color: #ccc;
-  } */
+  
 
   
   /* .main-column {

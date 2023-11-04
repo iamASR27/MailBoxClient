@@ -68,9 +68,9 @@ function LoginForm() {
         const data = await response.json();
         console.log(data);
         console.log("User has successfully logged in.");
-        dispatch(authActions.login({ token: data.idToken, userId: data.localId }));
+        dispatch(authActions.login({ token: data.idToken, userEmail: enteredEmail }));
         localStorage.setItem("token", data.idToken);
-        localStorage.setItem("userId", data.localId);
+        // localStorage.setItem("userId", data.localId);
         localStorage.setItem("userEmail", enteredEmail);
         navigate("/home");
       } else {
@@ -82,8 +82,6 @@ function LoginForm() {
         throw new Error(errorMessage);
       }
     } catch (err) {
-      //   alert(err.message);
-      // setAlertPassword(<Alert variant="danger">{err.message}</Alert>);
       showAlert(err.message, "danger");
     }
   };

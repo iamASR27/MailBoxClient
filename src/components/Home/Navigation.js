@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ComposeEmail from "../Mail/ComposeEmail";
 import { Button, Badge, ListGroup } from "react-bootstrap";
+import styles from "./Navigation.module.css";
 
 const NavigationSideBar = ({ onOptionClick }) => {
   const [showComposeModal, setShowComposeModal] = useState(false);
@@ -14,7 +15,7 @@ const NavigationSideBar = ({ onOptionClick }) => {
   };
 
   return (
-    <div>
+    <div className={styles.navigation}>
       <Button variant="primary" className="mb-3" onClick={handleComposeClick}>
         Compose
       </Button>

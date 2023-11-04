@@ -53,6 +53,7 @@ export const sendEmailToSentbox = async (senderId, emailData) => {
 
 export const fetchInboxMails = async () => {
   const userEmail = localStorage.getItem("userEmail");
+
   if (userEmail) {
     const userId = userEmail.replace(/[@.]/g, "");
   // console.log(userId)
@@ -63,7 +64,7 @@ export const fetchInboxMails = async () => {
     );
 
     if (!response) {
-      throw new Error("Failed to send email to user's sentbox");
+      throw new Error("Failed to send email to user's inbox");
     }
 
     const data = await response.json();

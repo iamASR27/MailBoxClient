@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 const EmailDetails = ({ selectedEmail, onClick }) => {
-  console.log("selectedEmail", selectedEmail);
+  // console.log("selectedEmail", selectedEmail);
 
   return (
     <div>
