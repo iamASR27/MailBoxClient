@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import ComposeEmail from "../Mail/ComposeEmail";
 import { Button, Badge, ListGroup } from "react-bootstrap";
 import styles from "./Navigation.module.css";
 
-const NavigationSideBar = ({ onOptionClick }) => {
+const NavigationSideBar = ({ onOptionClick, fetchInbox, fetchSentbox }) => {
   const [showComposeModal, setShowComposeModal] = useState(false);
 
   const handleComposeClick = () => {
@@ -19,7 +19,12 @@ const NavigationSideBar = ({ onOptionClick }) => {
       <Button variant="primary" className="mb-3" onClick={handleComposeClick}>
         Compose
       </Button>
-      <ComposeEmail show={showComposeModal} onHide={handleCloseComposeModal} />
+      <ComposeEmail
+        show={showComposeModal}
+        onHide={handleCloseComposeModal}
+        fetchInbox={fetchInbox}
+        fetchSentbox={fetchSentbox}
+      />
       <ListGroup>
         <ListGroup.Item
           as="li"
@@ -60,6 +65,6 @@ const NavigationSideBar = ({ onOptionClick }) => {
       </ListGroup>
     </div>
   );
-}
+};
 
 export default NavigationSideBar;

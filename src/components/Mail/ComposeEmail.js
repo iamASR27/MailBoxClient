@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import MailBoxEditor from "./MailBoxEditor";
 import { EditorState } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html';
+import { stateToHTML } from "draft-js-export-html";
 import EmailForm from "./EmailForm";
 // import Header from "../Header/Header";
 import { Button, Modal } from "react-bootstrap";
 import sendEmail from "../../store/email-actions";
 import { useDispatch } from "react-redux";
 import styles from "./ComposeEmail.module.css";
+import { useLocation } from "react-router-dom";
 
-const ComposeEmail = ({ onHide, show }) => {
+const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [subject, setSubject] = useState("");
   const [recipient, setRecipient] = useState("");
@@ -45,6 +47,15 @@ const ComposeEmail = ({ onHide, show }) => {
     setEmailContent("");
     setEditorState(() => EditorState.createEmpty());
     onHide();
+
+    setTimeout(() => {
+      if (location.pathname.includes("home")) {
+        fetchInbox();
+      } else {
+        fetchSentbox();
+        console.log("sent");
+      }
+    }, 1000);
   };
 
   const toggleFullScreen = () => {

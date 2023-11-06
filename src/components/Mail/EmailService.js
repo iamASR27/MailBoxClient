@@ -76,4 +76,27 @@ export const fetchInboxMails = async () => {
 }
 };
 
-const fetchSentboxMails = () => {};
+export const fetchSentboxMails = async () => {
+  const userEmail = localStorage.getItem("userEmail");
+
+  if (userEmail) {
+    const userId = userEmail.replace(/[@.]/g, "");
+  // console.log(userId)
+
+  try {
+    const response = await fetch(
+      `https://mailbox-client-167c3-default-rtdb.firebaseio.com/users/${userId}/sentbox.json`
+    );
+
+    if (!response) {
+      throw new Error("Failed to send email to user's sentbox");
+    }
+
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+};
