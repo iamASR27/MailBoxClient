@@ -10,30 +10,20 @@ const Home = ({ emailContent, setSelectedEmail, fetchInbox }) => {
 
   useEffect(() => {
     fetchInbox();
-  }, [fetchInbox]);
-
-  // useEffect(() => {
-  //   const emailKey = location.pathname.split("/home/")[1];
-  //   console.log(emailKey)
-  //   fetchInbox();
-  //   if (emailKey) {
-  //     const emailData = emailContent[emailKey];
-  //     console.log(emailData)
-  //     if (emailData) {
-  //       setSelectedEmail(emailData);
-  //     } else {
-  //       setSelectedEmail(null);
-  //     }
-  //   }
-  // }, [location, emailContent, fetchInbox, setSelectedEmail]);
+  }, []);
 
 
   const handleEmailSubjectClick = (emailKey) => {
+    // console.log(emailKey)
     const emailData = emailContent[emailKey];
     console.log(emailData);
     setSelectedEmail(emailData);
-    // localStorage.setItem("selectedEmail", JSON.stringify(emailData));
-    navigate(`/home/${emailKey}`);
+
+    // const emailDataString = JSON.stringify(emailData);
+    // const encodedEmailData = encodeURIComponent(emailDataString);
+    // navigate(`/home/${emailKey}?emailData=${encodedEmailData}`);
+    // emailData.emailKey = emailKey;
+    navigate(`/home/${emailKey}`, { state: { emailData }});
   };
 
 

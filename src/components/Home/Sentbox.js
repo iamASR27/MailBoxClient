@@ -10,7 +10,7 @@ const Sentbox = ({ emailContent, setSelectedEmail, fetchSentbox }) => {
 
   useEffect(() => {
     fetchSentbox();
-  }, [fetchSentbox])
+  }, [])
 
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];

@@ -36,8 +36,10 @@ function App() {
 
   const [emailContent, setEmailContent] = useState({});
   const [selectedEmail, setSelectedEmail] = useState(null);
+  // console.log(emailContent)
 
   useEffect(() => {
+    // console.log("inside line 41")
     if (notification) {
       const timer = setTimeout(() => {
         dispatch(uiActions.clearNotification());
@@ -59,14 +61,16 @@ function App() {
     }
   };
   const fetchInbox = useCallback(async () => {
+    // console.log("inside 63")
     const data = await fetchInboxMails();
     // console.log(data);
-    setEmailContent(data || {});
+    setEmailContent(data);
   }, []);
 
   const fetchSentbox = useCallback(async () => {
+    // console.log("inside 70")
     const data = await fetchSentboxMails();
-    console.log(data);
+    // console.log(data);
     setEmailContent(data || {});
   }, []);
 
@@ -79,20 +83,22 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const emailKey = location.pathname.split("/home/")[1];
-    console.log(emailKey);
-    // fetchInbox();
-    if (emailKey) {
-      const emailData = emailContent[emailKey];
-      console.log(emailData); //undefined
-      if (emailData) {
-        setSelectedEmail(emailData);
-      } else {
-        setSelectedEmail(null);
-      }
-    }
-  }, [location, emailContent]);
+  // useEffect(() => {
+  //   console.log("inside 86")
+  //   const emailKey = location.pathname.split("/home/")[1];
+  //   // console.log(emailKey);
+  //   fetchInbox();
+  //   if (emailKey) {
+  //     // console.log(emailContent)
+  //     const emailData = emailContent[emailKey];
+  //     // console.log(emailData); //undefined
+  //     if (emailData) {
+  //       setSelectedEmail(emailData);
+  //     } else {
+  //       setSelectedEmail(null);
+  //     }
+  //   }
+  // }, [location]);
 
   return (
     <>
