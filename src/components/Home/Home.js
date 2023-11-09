@@ -10,7 +10,8 @@ const Home = ({ emailContent, setSelectedEmail, fetchInbox }) => {
 
   useEffect(() => {
     fetchInbox();
-  }, []);
+    console.log("fetchInbox")
+  }, [fetchInbox]);
 
 
   const handleEmailSubjectClick = (emailKey) => {
@@ -25,7 +26,6 @@ const Home = ({ emailContent, setSelectedEmail, fetchInbox }) => {
     // emailData.emailKey = emailKey;
     navigate(`/home/${emailKey}`, { state: { emailData }});
   };
-
 
   return (
     <Container fluid className={styles.container}>

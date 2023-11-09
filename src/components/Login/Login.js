@@ -49,7 +49,7 @@ function LoginForm() {
     const enteredPassword = loginForm.password;
 
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBEH8BPvQKDMeJQkL4qDU3zmtoSvKt297Q";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnwPnXJjlw_tBrWF8ui454lPHJ0090gw4";
 
     try {
       const response = await fetch(url, {

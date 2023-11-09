@@ -160,7 +160,6 @@ function App() {
                 element={
                   <EmailDetails
                     onClick={handleGoback}
-                    selectedEmail={selectedEmail}
                   />
                 }
               />
