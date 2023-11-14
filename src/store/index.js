@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+// import thunk from "redux-thunk";
 import authSlice from "./auth";
 import uiSlice from "./ui-slice";
 
 const store = configureStore({
-    reducer: { auth: authSlice.reducer, ui: uiSlice.reducer}
+    reducer: { auth: authSlice.reducer, ui: uiSlice.reducer},
+    // middleware: [thunk],
 });
 
 export default store;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Spinner } from "react-bootstrap";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = (props) => {
   return (
-    <Spinner animation="border" role="status" size="sm">
+    <Spinner animation="border" role="status" size={props.size}>
       <span className="sr-only"></span>
     </Spinner>
   );

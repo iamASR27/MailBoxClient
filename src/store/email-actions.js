@@ -56,4 +56,38 @@ import { sendEmailToInbox, sendEmailToSentbox } from "../components/Mail/EmailSe
   };
 };
 
+// export const sendEmailToTrash = async (emailData) => {
+//   return async (dispatch) => {
+//     const userEmail = localStorage.getItem("userEmail");
+
+//     if (userEmail) {
+//       const userId = userEmail.replace(/[@.]/g, "");
+
+//       try {
+//         const response = await fetch(
+//           `https://mailbox-client-167c3-default-rtdb.firebaseio.com/users/${userId}/trash.json`,
+//           {
+//             method: "POST",
+//             body: JSON.stringify(emailData),
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//           }
+//         );
+
+//         if (!response.ok) {
+//           throw new Error("Failed to send email to user's trash!");
+//         }
+
+//         const data = await response.json();
+//         return data;
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     }
+//   };
+ 
+// };
+
 export default sendEmail;
+

@@ -3,8 +3,9 @@
     flex-direction: column;
     justify-content: flex-start;
     /* align-items: flex-start; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 20vw;
-    height: 90vh;
+    height: 85vh;
     padding: 1rem;
+    /* background-color: #f2f2f2; */
   }

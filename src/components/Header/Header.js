@@ -13,7 +13,7 @@ const Header = () => {
     localStorage.removeItem("token");
     // localStorage.removeItem("userId");
     localStorage.removeItem("userEmail");
-    localStorage.removeItem("selectedEmail");
+    localStorage.removeItem("activeOption");
     dispatch(authActions.logout());
     navigate("/login");
   };

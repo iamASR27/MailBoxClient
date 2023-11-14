@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import React from "react";
+import { Button, Container } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import styles from "./EmailDetails.module.css";
 
 const EmailDetails = ({ onClick }) => {
-  // const [emailData, setEmailData] = useState(null);
-
   const location = useLocation();
   const emailData = location.state.emailData;
-  console.log(location)
+  // console.log(location)
  
     // const queryParams = new URLSearchParams(location.search);
     // const encodedEmailData = queryParams.get("emailData");
@@ -17,15 +18,17 @@ const EmailDetails = ({ onClick }) => {
    
 
   return (
-    <div>
-      <Button onClick={onClick} variant="outline-primary">
-        Go Back
+    <Container fluid >
+      <div className={styles.emailDetails}>
+      <Button onClick={onClick} variant="" title="go back" className={`mt-1 ${styles.backButton}`}>
+        <FontAwesomeIcon icon={faArrowLeft} />
       </Button>
-      <h2>{emailData.subject}</h2>
-      <p>{emailData.from}</p>
-      {new Date(emailData.timestamp).toLocaleString()}
-      <div dangerouslySetInnerHTML={{ __html: emailData.content }} />
-    </div>
+      <div className="mt-1"><h3>{emailData.subject}</h3></div>
+      <div><p>from: {emailData.from}</p></div>
+      <div className={styles.timestamp}>{new Date(emailData.timestamp).toLocaleString()}</div>
+      <div className={styles.emailContent} dangerouslySetInnerHTML={{ __html: emailData.content }} />
+      </div>
+    </Container>
   );
 };
 

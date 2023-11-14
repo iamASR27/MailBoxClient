@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Spinner/Spinner";
 import {
   Form,
   Button,
@@ -10,6 +11,8 @@ import {
   Container,
 } from "react-bootstrap";
 import styles from "./SignUp.module.css";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
 
 function SignupForm() {
   const [signUpForm, setSignUpForm] = useState({
@@ -19,8 +22,10 @@ function SignupForm() {
   });
 
   const [alertPassword, setAlertPassword] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -33,7 +38,7 @@ function SignupForm() {
 
   const showAlert = (message, variant) => {
     setAlertPassword(<Alert variant={variant}>{message}</Alert>);
-    
+
     setTimeout(() => {
       setAlertPassword(null);
     }, 3000);
@@ -41,13 +46,18 @@ function SignupForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const enteredEmail = signUpForm.email;
     const enteredPassword = signUpForm.password;
     const confirmEnteredPassword = signUpForm.confirmPassword;
 
     if (enteredPassword !== confirmEnteredPassword) {
-      setAlertPassword(<Alert variant="danger">Password and confirm password do not match</Alert>);
+      setAlertPassword(
+        <Alert variant="danger">
+          Password and confirm password do not match
+        </Alert>
+      );
     }
 
     let url =
@@ -70,10 +80,11 @@ function SignupForm() {
         const data = await response.json();
         console.log(data);
         console.log("User has successfully signed up.");
+        dispatch(authActions.login({ token: data.idToken, userEmail: enteredEmail }))
         localStorage.setItem("token", data.idToken);
-        localStorage.setItem("userId", data.localId);
+        // localStorage.setItem("userId", data.localId);
         localStorage.setItem("userEmail", enteredEmail);
-        navigate("/home");
+        navigate("/inbox");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";
@@ -85,8 +96,18 @@ function SignupForm() {
     } catch (err) {
       // alert(err.message);
       showAlert(err.message, "danger");
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100" >
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <Container fluid className="p-0">
@@ -142,20 +163,23 @@ function SignupForm() {
                   />
                 </FloatingLabel>
               </Form.Group>
-            <div className={styles.toggle}>
-              <Button
-                type="submit"
-                variant="primary"
-                // block="true"
-                className={styles.customButton}
-                data-testid="signup-button"
-              >
-                Sign Up
-              </Button>
-              <p className="text-center mt-3">
-              Already have an account? <Link to="/login" className={styles.loginLink}>Login</Link>
-            </p>
-            </div>
+              <div className={styles.toggle}>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  // block="true"
+                  className={styles.customButton}
+                  data-testid="signup-button"
+                >
+                  Sign Up
+                </Button>
+                <p className="text-center mt-3">
+                  Already have an account?{" "}
+                  <Link to="/login" className={styles.loginLink}>
+                    Login
+                  </Link>
+                </p>
+              </div>
             </Form>
           </div>
         </Col>

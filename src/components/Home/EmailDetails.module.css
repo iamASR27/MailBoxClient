@@ -1,0 +1,27 @@
+.emailDetails {
+    margin-top: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    height: 70vh;
+    padding: 1rem;
+}
+
+.timestamp {
+    border-bottom: 0.5px solid #ccc;
+    color: #555;
+}
+
+.emailContent {
+    margin-top: 1rem;
+    line-height: 0.5;
+}
+
+.backButton {
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.backButton:hover, .backButton:active {
+    border-radius: 50%;
+    background-color: #f2f2f2;
+}

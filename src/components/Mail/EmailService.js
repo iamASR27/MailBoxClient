@@ -100,3 +100,28 @@ export const fetchSentboxMails = async () => {
   }
 }
 };
+
+export const fetchTrashBoxMails = async () => {
+  const userEmail = localStorage.getItem("userEmail");
+
+  if (userEmail) {
+    const userId = userEmail.replace(/[@.]/g, "");
+  // console.log(userId)
+
+  try {
+    const response = await fetch(
+      `https://mailbox-client-167c3-default-rtdb.firebaseio.com/users/${userId}/trash.json`
+    );
+
+    if (!response) {
+      throw new Error("Failed to send email to user's trashbox");
+    }
+
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+};

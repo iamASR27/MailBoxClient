@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         </Form.Group>
         <Button type="submit" disabled={loading} className="mt-3">
           {loading ? (
-            <LoadingSpinner />
+            <LoadingSpinner size="sm" />
           ) : (
             "Send Link"
           )}

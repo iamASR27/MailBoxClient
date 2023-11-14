@@ -1,19 +1,27 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import styles from "./EmailDetails.module.css";
 
-const SentEmailDetails = ({ selectedEmail, onClick }) => {
-  // console.log("selectedEmail", selectedEmail);
+const SentEmailDetails = ({ onClick }) => {
+  const location = useLocation();
+  const emailData = location.state.emailData;
+
 
   return (
-    <div>
-      <Button onClick={onClick} variant="outline-primary">
-        Go Back
+    <Container fluid >
+    <div className={styles.emailDetails}>
+    <Button onClick={onClick} variant="" title="go back" className={`mt-1 ${styles.backButton}`}>
+        <FontAwesomeIcon icon={faArrowLeft} />
       </Button>
-      <h2>{selectedEmail.subject}</h2>
-      <p>{selectedEmail.to}</p>
-      {new Date(selectedEmail.timestamp).toLocaleString()}
-      <div dangerouslySetInnerHTML={{ __html: selectedEmail.content }} />
+    <div className="mt-1"><h3>{emailData.subject}</h3></div>
+    <div><p>to: {emailData.to}</p></div>
+    <div className={styles.timestamp}>{new Date(emailData.timestamp).toLocaleString()}</div>
+    <div className={styles.emailContent} dangerouslySetInnerHTML={{ __html: emailData.content }} />
     </div>
+  </Container>
   );
 };
 

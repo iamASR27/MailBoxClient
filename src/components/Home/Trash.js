@@ -7,29 +7,30 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 // import { useDispatch } from "react-redux";
 import styles from "./Inbox.module.css";
 
-const Sentbox = ({ emailContent, fetchSentbox }) => {
+const TrashBox = ({ emailContent, fetchTrashBox }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchSentbox();
+    fetchTrashBox();
     setLoading(false);
-  }, [fetchSentbox])
+  }, [fetchTrashBox])
 
+  const userEmail = localStorage.getItem("userEmail");
 
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];
     console.log(emailData);
     // setSelectedEmail(emailData);
     
-    navigate(`/sent/${emailKey}`, { state: { emailData }});
+    navigate(`/trash/${emailKey}`, { state: { emailData }});
   };
 
-  const handleDeleteSentEmail = async (emailKey, event) => {
+  const handleDeleteTrashEmail = async (emailKey, event) => {
     event.stopPropagation();
     console.log("Delete email with key:", emailKey);
-    const emailData = emailContent[emailKey];
+    // const emailData = emailContent[emailKey];
     // dispatch(sendEmailToTrash(emailData));
     const userEmail = localStorage.getItem("userEmail");
     let url = "https://mailbox-client-167c3-default-rtdb.firebaseio.com/users";
@@ -39,7 +40,7 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
 
       try {
         const deleteResponse = await fetch(
-          `${url}/${userId}/sentbox/${emailKey}.json`,
+          `${url}/${userId}/trash/${emailKey}.json`,
           {
             method: "DELETE",
           }
@@ -49,20 +50,7 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
           throw new Error("Failed to delete email from sentbox!");
         }
 
-        await fetchSentbox();
-
-        
-        const response = await fetch(`${url}/${userId}/trash.json`, {
-          method: "POST",
-          body: JSON.stringify(emailData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to send email to user's trash!");
-        }
+        await fetchTrashBox();
       } catch (error) {
         console.error(error);
       }
@@ -83,9 +71,12 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
             onClick={() => handleEmailSubjectClick(emailKey)}
             className={styles["email-list"]}
           >
-            <div className={styles["email-from"]}>
+            {emailContent[emailKey].to && emailContent[emailKey].to !== userEmail && (<div className={styles["email-from"]}>
               to: {emailContent[emailKey].to}
-            </div>
+            </div>)}
+            {emailContent[emailKey].from && emailContent[emailKey].from !== userEmail && (<div className={styles["email-from"]}>
+              from: {emailContent[emailKey].from}
+            </div>)}
             <div className={styles["email-subject-text"]}>
               {emailContent[emailKey].subject}
             </div>
@@ -93,7 +84,7 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
               <Button
                 variant=""
                 title="Delete"
-                onClick={(event) => handleDeleteSentEmail(emailKey, event)}
+                onClick={(event) => handleDeleteTrashEmail(emailKey, event)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </Button>
@@ -102,10 +93,10 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
         ))}
       </div>
     ) : (
-      <div>You don't have any sent emails</div>
+      <div>You don't have any emails in Trash</div>
     )}
   </Container>
   );
 };
 
-export default Sentbox;
+export default TrashBox;

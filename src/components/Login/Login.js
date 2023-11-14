@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Spinner/Spinner";
 import {
   Form,
   Button,
@@ -20,6 +21,7 @@ function LoginForm() {
   });
 
   const [alertPassword, setAlertPassword] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,6 +46,7 @@ function LoginForm() {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const enteredEmail = loginForm.email;
     const enteredPassword = loginForm.password;
@@ -72,7 +75,7 @@ function LoginForm() {
         localStorage.setItem("token", data.idToken);
         // localStorage.setItem("userId", data.localId);
         localStorage.setItem("userEmail", enteredEmail);
-        navigate("/home");
+        navigate("/inbox");
       } else {
         const data = await response.json();
         let errorMessage = "Authentication Failed";
@@ -83,8 +86,18 @@ function LoginForm() {
       }
     } catch (err) {
       showAlert(err.message, "danger");
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100" >
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <Container fluid className="p-0">

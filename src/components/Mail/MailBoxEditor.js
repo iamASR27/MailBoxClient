@@ -8,7 +8,6 @@ const MailBoxEditor = ({ editorState, onEditorStateChange }) => {
 
   return (
     <>
-    <div>
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
@@ -16,7 +15,6 @@ const MailBoxEditor = ({ editorState, onEditorStateChange }) => {
         editorClassName={styles["editor-class"]}
         toolbarClassName={styles["toolbar-class"]}
       />
-    </div>
    </>
   );
 };
