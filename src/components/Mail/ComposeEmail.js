@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MailBoxEditor from "./MailBoxEditor";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import EmailForm from "./EmailForm";
-// import Header from "../Header/Header";
 import { Button, Modal } from "react-bootstrap";
-import sendEmail from "../../store/email-actions";
 import { useDispatch } from "react-redux";
 import styles from "./ComposeEmail.module.css";
-// import { useLocation } from "react-router-dom";
+import useSendEmail from "./useSendEmail";
 
 const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
-  // const location = useLocation();
   const dispatch = useDispatch();
+  const { sendEmail } = useSendEmail();
   const [subject, setSubject] = useState("");
   const [recipient, setRecipient] = useState("");
   const [emailContent, setEmailContent] = useState("");
@@ -47,26 +45,8 @@ const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
     setEmailContent("");
     setEditorState(() => EditorState.createEmpty());
     onHide();
-  };
 
-  // useEffect(() => {
-  //  const fetchData = async () => {
-  //     try {
-  //       if (location.pathname.includes("inbox")) {
-  //         await fetchInbox();
-  //       } else if (location.pathname.includes("sent")) {
-  //         await fetchSentbox();
-  //         console.log("sent");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching emails:", error);
-  //     }
-  //   }; 
-  //   if(!show){
-  //     fetchData();
-  //   }
-    
-  // }, [location.pathname, fetchInbox, fetchSentbox, show]);
+  };
 
   const toggleFullScreen = () => {
     setIsFullScreen((prevFullScreen) => !prevFullScreen);

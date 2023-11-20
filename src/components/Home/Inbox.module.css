@@ -1,7 +1,9 @@
 .container {
     /* width: 50vw; */
     height: 70vh;
-    /* margin-top: -2rem; */
+    /* height: 100%; */
+    /* overflow-y: scroll; */
+    /* background-color: white; */
 }
 
   .email-subject {
@@ -12,8 +14,9 @@
     margin-top: 2rem;
     /* border: 1px solid #ccc; */
     background-color: white;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 100%;
+    overflow-y: scroll;
   }
 
   .email-list {

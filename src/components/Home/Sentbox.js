@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Spinner/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { mailActions } from "../../store/mail-slice";
 import styles from "./Inbox.module.css";
 
-const Sentbox = ({ emailContent, fetchSentbox }) => {
-  const [loading, setLoading] = useState(true);
+const Sentbox = ({ emailContent, fetchSentbox, setEmailContent, loading }) => {
+  // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const emailCounts = useSelector((state) => state.mail.emailCounts);
 
-  useEffect(() => {
-    fetchSentbox();
-    setLoading(false);
-  }, [fetchSentbox])
-
+  // useEffect(() => {
+  //   if (loading) {
+  //     fetchSentbox();
+  //     setLoading(false);
+  //   }
+  // }, [fetchSentbox, loading]);
 
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];
-    console.log(emailData);
+    // console.log(emailData);
     // setSelectedEmail(emailData);
-    
-    navigate(`/sent/${emailKey}`, { state: { emailData }});
+    navigate(`/sent/${emailKey}`, { state: { emailData } });
   };
 
   const handleDeleteSentEmail = async (emailKey, event) => {
@@ -49,9 +51,18 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
           throw new Error("Failed to delete email from sentbox!");
         }
 
-        await fetchSentbox();
+        // await fetchSentbox();
 
-        
+        setEmailContent((prevEmailContent) => {
+          const updatedEmailContent = { ...prevEmailContent };
+          delete updatedEmailContent[emailKey];
+          return updatedEmailContent;
+        });
+        dispatch(mailActions.updateMailCount({
+          inboxCount: emailCounts.inboxCount,
+          sentCount: emailCounts.sentCount - 1,  
+          trashCount: emailCounts.trashCount + 1, 
+        }));
         const response = await fetch(`${url}/${userId}/trash.json`, {
           method: "POST",
           body: JSON.stringify(emailData),
@@ -71,40 +82,40 @@ const Sentbox = ({ emailContent, fetchSentbox }) => {
 
   return (
     <Container fluid className={styles.container}>
-    {loading ? (
-      <div>
-        <LoadingSpinner />
-      </div>
-    ) : emailContent ? (
-      <div className={styles["email-subject"]}>
-        {Object.keys(emailContent).map((emailKey) => (
-          <div
-            key={emailKey}
-            onClick={() => handleEmailSubjectClick(emailKey)}
-            className={styles["email-list"]}
-          >
-            <div className={styles["email-from"]}>
-              to: {emailContent[emailKey].to}
-            </div>
-            <div className={styles["email-subject-text"]}>
-              {emailContent[emailKey].subject}
-            </div>
-            <div className={styles["delete-button"]}>
-              <Button
-                variant=""
-                title="Delete"
-                onClick={(event) => handleDeleteSentEmail(emailKey, event)}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </Button>
+      {loading ? (
+        <div>
+          <LoadingSpinner />
+        </div>
+      ) : emailContent ? (
+        <div className={styles["email-subject"]}>
+          {Object.keys(emailContent).map((emailKey) => (
+            <div
+              key={emailKey}
+              onClick={() => handleEmailSubjectClick(emailKey)}
+              className={styles["email-list"]}
+            >
+              <div className={styles["email-from"]}>
+                to: {emailContent[emailKey].to}
               </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <div>You don't have any sent emails</div>
-    )}
-  </Container>
+              <div className={styles["email-subject-text"]}>
+                {emailContent[emailKey].subject}
+              </div>
+              <div className={styles["delete-button"]}>
+                <Button
+                  variant=""
+                  title="Delete"
+                  onClick={(event) => handleDeleteSentEmail(emailKey, event)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>You don't have any sent emails</div>
+      )}
+    </Container>
   );
 };
 

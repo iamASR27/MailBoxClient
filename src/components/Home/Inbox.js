@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Spinner/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Inbox.module.css";
-// import { useDispatch } from "react-redux";
-// import { sendEmailToTrash } from "../../store/email-actions";
+import { useDispatch, useSelector } from "react-redux";
+import { mailActions } from "../../store/mail-slice";
 
-const Inbox = ({ emailContent, fetchInbox }) => {
-  const [loading, setLoading] = useState(true);
+const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
+  // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const emailCounts = useSelector((state) => state.mail.emailCounts) 
 
-  useEffect(() => {
-    fetchInbox();
-    setLoading(false);
-    console.log("fetchInbox");
-  }, [fetchInbox]);
+  // useEffect(() => {
+  //   if(loading) {
+  //     fetchInbox();
+  //     setLoading(false);
+  //     console.log("fetchInbox");
+  //   }
+  // }, [fetchInbox, loading]);
 
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];
@@ -35,7 +38,6 @@ const Inbox = ({ emailContent, fetchInbox }) => {
     event.stopPropagation();
     console.log("Delete email with key:", emailKey);
     const emailData = emailContent[emailKey];
-    // dispatch(sendEmailToTrash(emailData));
     const userEmail = localStorage.getItem("userEmail");
     let url = "https://mailbox-client-167c3-default-rtdb.firebaseio.com/users";
 
@@ -54,7 +56,20 @@ const Inbox = ({ emailContent, fetchInbox }) => {
           throw new Error("Failed to delete email from inbox!");
         }
 
-        await fetchInbox();
+        // await fetchInbox();
+
+        setEmailContent((prevEmailContent) => {
+          const updatedEmailContent = { ...prevEmailContent };
+          delete updatedEmailContent[emailKey];
+          return updatedEmailContent;
+        });
+
+        dispatch(mailActions.updateMailCount({
+          inboxCount: emailCounts.inboxCount - 1,
+          sentCount: emailCounts.sentCount,  
+          trashCount: emailCounts.trashCount + 1, 
+        }));
+    
 
         const response = await fetch(`${url}/${userId}/trash.json`, {
           method: "POST",
