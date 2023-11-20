@@ -4,16 +4,20 @@ import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import EmailForm from "./EmailForm";
 import { Button, Modal } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import styles from "./ComposeEmail.module.css";
 import useSendEmail from "./useSendEmail";
+// import { mailActions } from "../../store/mail-slice";
 
-const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
-  const dispatch = useDispatch();
+const ComposeEmail = ({ onHide, show, setSentEmailContent }) => {
+  // const dispatch = useDispatch();
   const { sendEmail } = useSendEmail();
   const [subject, setSubject] = useState("");
   const [recipient, setRecipient] = useState("");
   const [emailContent, setEmailContent] = useState("");
+
+  // const sentMails = useSelector((state) => state.mail.sent);
+
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -38,7 +42,11 @@ const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
     console.log("Recipient: " + recipient);
     console.log("Email Content: " + emailContent);
 
-    dispatch(sendEmail(senderId, recipient, subject, emailContent));
+    const emailData = await sendEmail(senderId, recipient, subject, emailContent);
+    setSentEmailContent((prevData) => ({
+      ...prevData,
+      emailData
+    }));
 
     setSubject("");
     setRecipient("");
@@ -91,28 +99,3 @@ const ComposeEmail = ({ onHide, show, fetchInbox, fetchSentbox }) => {
 
 export default ComposeEmail;
 
-// return (
-//   <div>
-//     <Header />
-//     <div className={styles.home}>
-//       <EmailForm
-//         setSubject={setSubject}
-//         setRecipient={setRecipient}
-//         subject={subject}
-//         recipient={recipient}
-//       />
-//       <MailBoxEditor
-//         editorState={editorState}
-//         onEditorStateChange={onEditorStateChange}
-//       />
-//       <Button
-//         type="submit"
-//         variant="primary"
-//         className="mt-3"
-//         onClick={handleSendEmail}
-//       >
-//         Send Email
-//       </Button>
-//     </div>
-//   </div>
-// );

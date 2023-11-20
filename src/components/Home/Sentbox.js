@@ -14,17 +14,8 @@ const Sentbox = ({ emailContent, fetchSentbox, setEmailContent, loading }) => {
   const dispatch = useDispatch();
   const emailCounts = useSelector((state) => state.mail.emailCounts);
 
-  // useEffect(() => {
-  //   if (loading) {
-  //     fetchSentbox();
-  //     setLoading(false);
-  //   }
-  // }, [fetchSentbox, loading]);
-
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];
-    // console.log(emailData);
-    // setSelectedEmail(emailData);
     navigate(`/sent/${emailKey}`, { state: { emailData } });
   };
 

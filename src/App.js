@@ -26,7 +26,6 @@ function App() {
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const notification = useSelector((state) => state.ui.notification);
-  // const emailCounts = useSelector((state) => state.mail.emailCounts);
 
   const [inboxEmailContent, setInboxEmailContent] = useState({});
   const [sentEmailContent, setSentEmailContent] = useState({});
@@ -86,19 +85,6 @@ function App() {
     }
   }, [fetchInbox, fetchSentbox, fetchTrashBox, loading, isLoggedIn]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await fetchInbox();
-  //     await fetchSentbox();
-  //     await fetchTrashBox();
-  //     setLoading(false);
-  //   };
-  
-  //   if (isLoggedIn && loading) {
-  //     fetchData();
-  //   }
-  // }, [fetchInbox, fetchSentbox, fetchTrashBox, loading, isLoggedIn]);
-
   const handleGoback = () => {
     navigate(-1);
   };
@@ -119,8 +105,7 @@ function App() {
           {isLoggedIn && (
             <NavigationSideBar
               onOptionClick={handleSidebarOptionClick}
-              fetchInbox={fetchInbox}
-              fetchSentbox={fetchSentbox}
+              setSentEmailContent={setSentEmailContent}
             />
           )}
         </div>
@@ -135,6 +120,7 @@ function App() {
                     <Inbox
                       emailContent={inboxEmailContent}
                       setEmailContent={setInboxEmailContent}
+                      fetchInbox={fetchInbox}
                       loading={loading}
                     />
                   }
@@ -184,77 +170,6 @@ function App() {
                 <Route path="/signUp" element={<SignupForm />} />
               </>
             )}
-            {/* {!isLoggedIn && <Route path="/" element={<Navigate to="/login" />} />}
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/login/forgotPassword" element={<ForgotPassword />} />
-            <Route path="/signUp" element={<SignupForm />} />
-
-            {isLoggedIn && (
-              <Route
-                path="/inbox"
-                element={
-                  <Inbox
-                    emailContent={inboxEmailContent}
-                    setEmailContent={setInboxEmailContent}
-                    loading={loading}
-                  />
-                }
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/sent"
-                element={
-                  <Sentbox
-                    emailContent={sentEmailContent}
-                    setEmailContent={setSentEmailContent}
-                    loading={loading}
-                  />
-                }
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/trash"
-                element={
-                  <TrashBox
-                    emailContent={trashEmailContent}
-                    setEmailContent={setTrashEmailContent}
-                    loading={loading}
-                  />
-                }
-              />
-            )}
-
-            {isLoggedIn && (
-              <Route
-                path="/inbox/:emailKey"
-                element={<EmailDetails onClick={handleGoback} />}
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/sent/:emailKey"
-                element={
-                  <SentEmailDetails
-                    onClick={handleGoback}
-                  />
-                }
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/trash/:emailKey"
-                element={
-                  <TrashEmailDetails
-                    onClick={handleGoback}
-                  />
-                }
-              />
-            )}
-             {isLoggedIn && (
-              <Route path="*" element={<Navigate to="/inbox" />} />
-            )} */}
           </Routes>
         </div>
       </div>

@@ -42,6 +42,7 @@ const useSendEmail = () => {
               message: "Email sent successfully!",
             })
           );
+          return emailData;
         } else {
           dispatch(
             uiActions.showNotification({
@@ -50,6 +51,7 @@ const useSendEmail = () => {
               message: "Something went wrong!",
             })
           );
+        
         }
       } catch (error) {
         dispatch(

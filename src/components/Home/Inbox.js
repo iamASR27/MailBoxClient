@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Spinner/Spinner";
@@ -14,13 +14,13 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
   const dispatch = useDispatch();
   const emailCounts = useSelector((state) => state.mail.emailCounts) 
 
-  // useEffect(() => {
-  //   if(loading) {
-  //     fetchInbox();
-  //     setLoading(false);
-  //     console.log("fetchInbox");
-  //   }
-  // }, [fetchInbox, loading]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetchInbox();
+    }, 10000);
+
+    return () => clearInterval(fetchInterval);
+  }, [fetchInbox]);
 
   const handleEmailSubjectClick = (emailKey) => {
     const emailData = emailContent[emailKey];
