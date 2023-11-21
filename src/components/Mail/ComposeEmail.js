@@ -4,19 +4,19 @@ import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import EmailForm from "./EmailForm";
 import { Button, Modal } from "react-bootstrap";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./ComposeEmail.module.css";
 import useSendEmail from "./useSendEmail";
-// import { mailActions } from "../../store/mail-slice";
+import { mailActions } from "../../store/mail-slice";
 
 const ComposeEmail = ({ onHide, show, setSentEmailContent }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { sendEmail } = useSendEmail();
   const [subject, setSubject] = useState("");
   const [recipient, setRecipient] = useState("");
   const [emailContent, setEmailContent] = useState("");
 
-  // const sentMails = useSelector((state) => state.mail.sent);
+  const emailCounts = useSelector((state) => state.mail.emailCounts);
 
 
   const [editorState, setEditorState] = useState(() =>
@@ -46,6 +46,12 @@ const ComposeEmail = ({ onHide, show, setSentEmailContent }) => {
     setSentEmailContent((prevData) => ({
       ...prevData,
       emailData
+    }));
+
+    dispatch(mailActions.updateMailCount({
+      inboxCount: emailCounts.inboxCount,
+      sentCount: emailCounts.sentCount + 1,  
+      trashCount: emailCounts.trashCount, 
     }));
 
     setSubject("");
