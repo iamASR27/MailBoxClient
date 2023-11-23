@@ -12,6 +12,8 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
   const [showComposeModal, setShowComposeModal] = useState(false);
 
   const emailCounts = useSelector((state) => state.mail.emailCounts);
+  const inboxEmails = useSelector((state) => state.mail.inbox);
+  const unreadEmails = Object.values(inboxEmails).filter(email => !email.isRead);
 
   useEffect(() => {
     localStorage.setItem("activeOption", activeOption);
@@ -45,6 +47,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
           className="d-flex justify-content-between align-items-start"
           onClick={() => {onOptionClick("Inbox"); handleActiveOption("Inbox")}}
           active={activeOption === "Inbox"}
+          title={`${unreadEmails.length} unread emails`}
         >
           <div className="ms-2 me-auto">
             <div className="fw-bold">Inbox</div>
@@ -53,6 +56,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
           {emailCounts.inboxCount}
           {/* {inboxCount} */}
           </Badge>
+          {/* <div>{unreadEmails.length} unread emails</div> */}
         </ListGroup.Item>
         <ListGroup.Item
           as="li"

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../../store/mail-slice";
 import styles from "./Inbox.module.css";
 
-const Sentbox = ({ emailContent, fetchSentbox, setEmailContent, loading }) => {
+const Sentbox = ({ emailContent, fetchSentbox, setEmailContent, loading, setTrashEmailContent }) => {
   // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,6 +43,10 @@ const Sentbox = ({ emailContent, fetchSentbox, setEmailContent, loading }) => {
         }
 
         // await fetchSentbox();
+        setTrashEmailContent((prevTrashEmailContent) => ({
+          ...prevTrashEmailContent,
+          [emailKey]: emailData,
+        }));
 
         setEmailContent((prevEmailContent) => {
           const updatedEmailContent = { ...prevEmailContent };

@@ -67,7 +67,7 @@ function App() {
     const data = await fetchSentboxMails();
     setSentEmailContent(data);
     dispatch(mailActions.storeSentMail(data));
-    // console.log(data)
+    console.log(data)
   }, [fetchSentboxMails, dispatch]);
 
   const fetchTrashBox = useCallback(async () => {
@@ -120,6 +120,7 @@ function App() {
                     <Inbox
                       emailContent={inboxEmailContent}
                       setEmailContent={setInboxEmailContent}
+                      setTrashEmailContent={setTrashEmailContent}
                       fetchInbox={fetchInbox}
                       loading={loading}
                     />
@@ -131,6 +132,7 @@ function App() {
                     <Sentbox
                       emailContent={sentEmailContent}
                       setEmailContent={setSentEmailContent}
+                      setTrashEmailContent={setTrashEmailContent}
                       loading={loading}
                     />
                   }

@@ -58,6 +58,33 @@ const useEmailService = () => {
     }
   };
 
+  const updateUserEmail = async (userEmail, emailData, emailKey) => {
+    // console.log(recipientId);
+    const userId = userEmail.replace(/[@.]/g, "");
+    try {
+      const response = await fetch(
+        `https://mailbox-client-167c3-default-rtdb.firebaseio.com/users/${userId}/inbox/${emailKey}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify(emailData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response) {
+        throw new Error("Failed to send email to receiver inbox!");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchInboxMails = async () => {
     const userEmail = localStorage.getItem("userEmail");
 
@@ -172,6 +199,7 @@ const useEmailService = () => {
   return {
     sendEmailToInbox,
     sendEmailToSentbox,
+    updateUserEmail,
     fetchInboxMails,
     fetchSentboxMails,
     fetchTrashBoxMails,

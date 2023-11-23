@@ -7,12 +7,15 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Inbox.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../../store/mail-slice";
+import useEmailService from "../Mail/useEmailService";
 
-const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
+const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading, setTrashEmailContent }) => {
   // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const emailCounts = useSelector((state) => state.mail.emailCounts) 
+  const emailCounts = useSelector((state) => state.mail.emailCounts);
+  const { updateUserEmail } = useEmailService();
+  const userEmail = localStorage.getItem("userEmail");
 
   useEffect(() => {
     const fetchInterval = setInterval(() => {
@@ -22,10 +25,22 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
     return () => clearInterval(fetchInterval);
   }, [fetchInbox]);
 
-  const handleEmailSubjectClick = (emailKey) => {
+  const handleEmailSubjectClick = async (emailKey) => {
     const emailData = emailContent[emailKey];
-    console.log(emailData);
-    // setSelectedEmail(emailData);
+    try {
+      const updatedEmailData = {
+        ...emailData,
+        isRead: true,
+      };
+      await updateUserEmail(userEmail, updatedEmailData, emailKey);
+
+      setEmailContent((prevEmailContent) => ({
+        ...prevEmailContent,
+        [emailKey]: updatedEmailData,
+      }));
+    } catch (error) {
+      console.error("Failed to mark email as read:", error);
+    }
 
     // const emailDataString = JSON.stringify(emailData);
     // const encodedEmailData = encodeURIComponent(emailDataString);
@@ -57,6 +72,10 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
         }
 
         // await fetchInbox();
+        setTrashEmailContent((prevTrashEmailContent) => ({
+          ...prevTrashEmailContent,
+          [emailKey]: emailData,
+        }));
 
         setEmailContent((prevEmailContent) => {
           const updatedEmailContent = { ...prevEmailContent };
@@ -66,10 +85,10 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
 
         dispatch(mailActions.updateMailCount({
           inboxCount: emailCounts.inboxCount - 1,
-          sentCount: emailCounts.sentCount,  
-          trashCount: emailCounts.trashCount + 1, 
+          sentCount: emailCounts.sentCount,
+          trashCount: emailCounts.trashCount + 1,
         }));
-    
+
 
         const response = await fetch(`${url}/${userId}/trash.json`, {
           method: "POST",
@@ -94,16 +113,22 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading }) => {
         <div>
           <LoadingSpinner />
         </div>
-      ) : emailContent ? (
+      ) : emailContent && Object.keys(emailContent).length > 0 ? (
         <div className={styles["email-subject"]}>
-          {Object.keys(emailContent).map((emailKey) => (
+          {Object.keys(emailContent).reverse().map((emailKey) => (
             <div
               key={emailKey}
               onClick={() => handleEmailSubjectClick(emailKey)}
               className={styles["email-list"]}
             >
               <div className={styles["email-from"]}>
-                from: {emailContent[emailKey].from}
+                {emailContent[emailKey].isRead === false && (
+                  <div className={styles["unread-dot"]}></div>
+                )}
+                {emailContent[emailKey].isRead && (
+                  <div className={styles["remove-dot"]}></div>
+                )}
+                  from: {emailContent[emailKey].from}
               </div>
               <div className={styles["email-subject-text"]}>
                 {emailContent[emailKey].subject}

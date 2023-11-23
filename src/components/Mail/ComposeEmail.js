@@ -43,15 +43,16 @@ const ComposeEmail = ({ onHide, show, setSentEmailContent }) => {
     console.log("Email Content: " + emailContent);
 
     const emailData = await sendEmail(senderId, recipient, subject, emailContent);
+    const timestampKey = Date.now().toString();
     setSentEmailContent((prevData) => ({
       ...prevData,
-      emailData
+      [timestampKey]: emailData,
     }));
 
     dispatch(mailActions.updateMailCount({
       inboxCount: emailCounts.inboxCount,
-      sentCount: emailCounts.sentCount + 1,  
-      trashCount: emailCounts.trashCount, 
+      sentCount: emailCounts.sentCount + 1,
+      trashCount: emailCounts.trashCount,
     }));
 
     setSubject("");

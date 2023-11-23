@@ -15,16 +15,16 @@ const mailSlice = createSlice({
   reducers: {
     storeInboxMail(state, action) {
      state.inbox = action.payload;
-     state.emailCounts.inboxCount = Object.keys(state.inbox).length;
+     state.emailCounts.inboxCount = Object.keys(state.inbox || {}).length;
     //  console.log(state.inbox)
     },
     storeSentMail(state, action) {
      state.sent = action.payload;
-     state.emailCounts.sentCount = Object.keys(state.sent).length;
+     state.emailCounts.sentCount = Object.keys(state.sent || {}).length;
     },
     storeTrashMail(state, action) {
      state.trash = action.payload;
-     state.emailCounts.trashCount = Object.keys(state.trash).length;
+     state.emailCounts.trashCount = Object.keys(state.trash || {}).length;
     },
     updateMailCount(state, action) {
       state.emailCounts = {

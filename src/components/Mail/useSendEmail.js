@@ -24,6 +24,7 @@ const useSendEmail = () => {
           subject,
           content,
           timestamp,
+          isRead: false,
         };
   
         // Send the email to recipient's inbox
