@@ -20,7 +20,7 @@ const Inbox = ({ emailContent, fetchInbox, setEmailContent, loading, setTrashEma
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetchInbox();
-    }, 10000);
+    }, 2000);
 
     return () => clearInterval(fetchInterval);
   }, [fetchInbox]);

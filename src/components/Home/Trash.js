@@ -80,7 +80,7 @@ const TrashBox = ({ emailContent, fetchTrashBox, setEmailContent, loading }) => 
         </div>
       ) : emailContent ? (
         <div className={styles["email-subject"]}>
-          {Object.keys(emailContent).map((emailKey) => (
+          {Object.keys(emailContent).reverse().map((emailKey) => (
             <div
               key={emailKey}
               onClick={() => handleEmailSubjectClick(emailKey)}
