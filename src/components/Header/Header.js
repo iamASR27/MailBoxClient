@@ -16,6 +16,7 @@ const Header = () => {
     localStorage.removeItem("activeOption");
     dispatch(authActions.logout());
     navigate("/login");
+    // resetState();
   };
 
   return (

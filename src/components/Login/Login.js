@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
 import styles from "./SignUp.module.css";
 
-function LoginForm() {
+function LoginForm({ setStateLoading }) {
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -47,6 +47,7 @@ function LoginForm() {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setStateLoading(true);
 
     const enteredEmail = loginForm.email;
     const enteredPassword = loginForm.password;

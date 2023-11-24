@@ -20,6 +20,7 @@ const mailSlice = createSlice({
     },
     storeSentMail(state, action) {
      state.sent = action.payload;
+    //  console.log(action.payload)
      state.emailCounts.sentCount = Object.keys(state.sent || {}).length;
     },
     storeTrashMail(state, action) {

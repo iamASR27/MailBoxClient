@@ -12,6 +12,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
   const [showComposeModal, setShowComposeModal] = useState(false);
 
   const emailCounts = useSelector((state) => state.mail.emailCounts);
+  // console.log(emailCounts)
   const inboxEmails = useSelector((state) => state.mail.inbox);
   const unreadEmails = Object.values(inboxEmails).filter(email => !email.isRead);
   // console.log(unreadEmails)
@@ -70,6 +71,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
           </div>
           <Badge bg="primary" pill>
           {emailCounts.sentCount}
+          {/* {console.log(emailCounts)} */}
           {/* {sentCount} */}
           </Badge>
         </ListGroup.Item>

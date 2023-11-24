@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../../store/mail-slice";
 import styles from "./Inbox.module.css";
 
-const TrashBox = ({ emailContent, fetchTrashBox, setEmailContent, loading }) => {
+const TrashBox = ({ emailContent, setEmailContent, loading }) => {
   // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();

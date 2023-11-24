@@ -67,7 +67,7 @@ function App() {
     const data = await fetchSentboxMails();
     setSentEmailContent(data);
     dispatch(mailActions.storeSentMail(data));
-    console.log(data)
+    // console.log(data)
   }, [fetchSentboxMails, dispatch]);
 
   const fetchTrashBox = useCallback(async () => {
@@ -164,7 +164,7 @@ function App() {
             ) : (
               <>
                 <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="/login" element={<LoginForm />} />
+                <Route path="/login" element={<LoginForm setStateLoading={setLoading} />} />
                 <Route
                   path="/login/forgotPassword"
                   element={<ForgotPassword />}
