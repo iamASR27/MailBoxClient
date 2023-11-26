@@ -44,7 +44,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
         onHide={handleCloseComposeModal}
         setSentEmailContent={setSentEmailContent}
       />
-      <ListGroup>
+      <ListGroup className={styles["navi-links"]}>
         <ListGroup.Item
           as="li"
           className="d-flex justify-content-between align-items-start"
