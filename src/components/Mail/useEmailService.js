@@ -6,7 +6,7 @@ const useEmailService = () => {
   // const emailCounts = useSelector((state) => state.mail.emailCounts);
 
   const sendEmailToInbox = async (recipientId, emailData) => {
-    console.log(recipientId);
+    // console.log(recipientId);
     recipientId = recipientId.replace(/[@.]/g, "");
     try {
       const response = await fetch(

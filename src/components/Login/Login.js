@@ -70,8 +70,8 @@ function LoginForm({ setStateLoading }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-        console.log("User has successfully logged in.");
+        // console.log(data);
+        // console.log("User has successfully logged in.");
         dispatch(authActions.login({ token: data.idToken, userEmail: enteredEmail }));
         localStorage.setItem("token", data.idToken);
         // localStorage.setItem("userId", data.localId);

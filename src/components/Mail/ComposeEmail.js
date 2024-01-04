@@ -38,9 +38,9 @@ const ComposeEmail = ({ onHide, show, setSentEmailContent }) => {
     const senderId = localStorage.getItem("userEmail");
     // console.log(senderId);
 
-    console.log("Email Subject: " + subject);
-    console.log("Recipient: " + recipient);
-    console.log("Email Content: " + emailContent);
+    // console.log("Email Subject: " + subject);
+    // console.log("Recipient: " + recipient);
+    // console.log("Email Content: " + emailContent);
 
     const emailData = await sendEmail(senderId, recipient, subject, emailContent);
     const timestampKey = Date.now().toString();

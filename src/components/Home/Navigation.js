@@ -14,7 +14,7 @@ const NavigationSideBar = ({ onOptionClick, setSentEmailContent }) => {
   const emailCounts = useSelector((state) => state.mail.emailCounts);
   // console.log(emailCounts)
   const inboxEmails = useSelector((state) => state.mail.inbox);
-  const unreadEmails = Object.values(inboxEmails).filter(email => !email.isRead);
+  const unreadEmails = inboxEmails ? Object.values(inboxEmails).filter(email => !email.isRead) : [];
   // console.log(unreadEmails)
   const unreadEmailsTitle = unreadEmails.length === 1 ? 'email' : 'emails';
 
