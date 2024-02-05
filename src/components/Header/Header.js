@@ -10,10 +10,11 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     // localStorage.removeItem("userId");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("activeOption");
+    // localStorage.removeItem("userEmail");
+    // localStorage.removeItem("activeOption");
+    localStorage.clear();
     dispatch(authActions.logout());
     navigate("/login");
     // resetState();
